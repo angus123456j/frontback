@@ -1,0 +1,48 @@
+/* src/HomePage.css */
+
+.scroll-container {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.scroll-content {
+  display: flex;
+  width: max-content;
+}
+
+.scroll-animation-left {
+  animation: scrollLeft 60s linear infinite;
+}
+
+.scroll-animation-right {
+  animation: scrollRight 60s linear infinite;
+}
+
+/* Keyframes for the scrolling animation */
+@keyframes scrollLeft {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollRight {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+/* This is a helper to make sure the content loops seamlessly */
+.scroll-content::after,
+.scroll-content::before {
+  content: " ";
+  display: flex;
+}
+
+
