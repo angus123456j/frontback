@@ -3,23 +3,22 @@ import Header from './components/Header';
 import CollapsibleSection from './components/CollapsibleSection';
 import TagPill from './components/TagPill'; // New import for the tags
 
-// Data for your tags
-const allTags = {
-  'Dietary Preferences': ['vegan', 'vegetarian', 'pescatarian', 'keto', 'low-carb'],
-  'Allergy-Friendly': ['gluten-free', 'dairy-free', 'nut-free', 'egg-free'],
-  'Meal Type': ['breakfast', 'lunch', 'dinner', 'snack', 'dessert'],
-  'Cooking Method': ['baked', 'grilled', 'fried', 'air-fried', 'roasted', 'boiled', 'steamed', 'sautéed', 'stir-fried', 'slow-cooked', 'pressure-cooked'],
-};
+import { allTags } from './tagsDta';
+
+
 
 function AddRecipePage() {
   const [recipeName, setRecipeName] = useState('');
   const [time, setTime] = useState('');
+  // In your component's state management
+  const [minutes, setMinutes] = useState(0);
   const [ingredients, setIngredients] = useState('');
+  const [description, setDescription] = useState('');
   const [steps, setSteps] = useState(['']);
   const [selectedTags, setSelectedTags] = useState([]); // State for selected tags
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-
+  
   const handleAddStep = () => {
     setSteps([...steps, '']);
   };
@@ -45,14 +44,16 @@ function AddRecipePage() {
         : [...prevTags, tag]
     );
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
-      recipeName,
-      time,
+      'title': recipeName,
+      'time': minutes,
+      description,
       ingredients,
-      selectedTags, // Included tags in the form data
+      'tags': selectedTags, // Included tags in the form data
       steps,
       imagePreview,
     };
@@ -90,7 +91,7 @@ function AddRecipePage() {
                   />
                 </CollapsibleSection>
 
-                <CollapsibleSection title="Add time:">
+                {/*<CollapsibleSection title="Add time:">
                   <p className="text-sm text-gray-500 mb-2">Add the amount of time this recipe takes.</p>
                   <input
                     type="text"
@@ -99,7 +100,24 @@ function AddRecipePage() {
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
                   />
-                </CollapsibleSection>
+                </CollapsibleSection>*/}
+
+              <CollapsibleSection title="Add time:">
+              <p className="text-sm text-gray-500 mb-2">Add the amount of time this recipe takes in minutes.</p>
+              <div>
+                <label htmlFor="minutes" className="block text-sm font-medium text-gray-700">Minutes</label>
+                <input
+                  id="minutes"
+                  type="number"
+                  className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
+                  value={minutes}
+                  onChange={(e) => setMinutes(parseInt(e.target.value))}
+                  min="0"
+                />
+              </div>
+            </CollapsibleSection>
+
+
 
                 <CollapsibleSection title="Add tags:"> {/* New Collapsible Section for tags */}
                   <p className="text-sm text-gray-500 mb-2">Select relevant tags for your recipe.</p>
@@ -120,8 +138,21 @@ function AddRecipePage() {
                   ))}
                 </CollapsibleSection>
 
+                <CollapsibleSection title="Add Description:">
+                  <p className="text-sm text-gray-500 mb-2">Add a decription for your recipe. 
+                  </p>
+                  <textarea
+                    className="w-full h-24 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
+                    placeholder="e.g. A warm, hearty meal that brings back the taste of home with every bite."
+                    value={ingredients}
+                    onChange={(e) => setIngredients(e.target.value)}
+                  />
+                </CollapsibleSection>
+
+
                 <CollapsibleSection title="Add ingredients:">
-                  <p className="text-sm text-gray-500 mb-2">Add the ingredients needed for the recipe.</p>
+                  <p className="text-sm text-gray-500 mb-2">Add the ingredients needed for the recipe. <br/> <strong>Seperate ingredients with a coma.</strong>
+                  </p>
                   <textarea
                     className="w-full h-24 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
                     placeholder="e.g. 1 lb ground beef, 2 slices bread"
@@ -129,6 +160,8 @@ function AddRecipePage() {
                     onChange={(e) => setIngredients(e.target.value)}
                   />
                 </CollapsibleSection>
+
+                
 
                 <CollapsibleSection title="Add step:">
                   <p className="text-sm text-gray-500 mb-2">Add each individual step needed for the recipe.</p>

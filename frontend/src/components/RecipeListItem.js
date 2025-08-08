@@ -4,7 +4,7 @@ import React from 'react';
 
 function RecipeListItem({ recipe }) {
   return (
-    <div className="flex items-center p-4 border border-gray-200 rounded-lg shadow-sm">
+    <div className="flex items-center p-4 border border-gray-200 rounded-lg shadow-sm transition-transform hover:scale-105 hover:z-10 cursor-pointer">
       <img
         src={recipe.image}
         alt={recipe.name}

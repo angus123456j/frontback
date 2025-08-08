@@ -10,6 +10,7 @@ function TagPill({ tag, isSelected, onSelect }) {
   return (
     <button
       type="button"
+      // Change the onClick to a function that calls onSelect with just the tag
       onClick={() => onSelect(tag)}
       className={`px-3 py-1 text-sm rounded-full transition-colors ${selectedClass}`}
     >

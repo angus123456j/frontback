@@ -1,8 +1,9 @@
 // src/SearchResultsPage.js
 
-import React from 'react';
+import React, {useContext} from 'react';
 import Header from './components/Header';
 import SearchCard from './components/SearchCard';
+
 import ribImage from './assets/rib.jpg';
 import tofuImage from './assets/tofu.jpg';
 import friedChickenImage from './assets/friedChicken.jpg';
@@ -13,6 +14,7 @@ import chickenKatsuImage from './assets/easy-chicken-katsu-curry5.jpg';
 import coconutChickenImage from './assets/coconut-chicken-curry-1-11.jpg';
 import phillyImage from './assets/Philly-cheesesteak-fbc53c6.jpg';
 import honeyGarlicChickenImage from './assets/30-Minute-Honey-Garlic-Chicken-1.jpg';
+import {RecipeContext} from './context/RecipeContext';
 
 // Sample data to fill the search results page
 
@@ -30,6 +32,11 @@ const sampleSearchResults = [
 ];
 
 function SearchResultsPage() {
+  
+  const {filteredRecipes} = useContext(RecipeContext);
+  console.log(filteredRecipes);
+
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <Header />
